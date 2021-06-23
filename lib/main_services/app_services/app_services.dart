@@ -1,22 +1,19 @@
+import 'package:fan_app/main_services/app_services/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
+class AppServices extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _AppServicesState createState() => _AppServicesState();
 }
 
-class _LoginState extends State<LoginPage> {
+class _AppServicesState extends State<AppServices> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('Login to Fan App'),
+      child: LoginPage(),
     );
   }
 }
