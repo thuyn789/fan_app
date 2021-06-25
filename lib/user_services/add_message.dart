@@ -2,14 +2,12 @@ import 'package:fan_app/app_services/login.dart';
 import 'package:fan_app/user_services/user_profile.dart';
 import 'package:flutter/material.dart';
 
-import 'add_message.dart';
-
-class HomePage extends StatefulWidget {
+class AddMessagePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _AddMessageState createState() => _AddMessageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _AddMessageState extends State<AddMessagePage> {
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
 
@@ -26,7 +24,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             SizedBox(height: 75),
             Text(
-              'Home',
+              'Add Message',
               style: TextStyle(
                 fontSize: 40,
                 color: Colors.white,
@@ -34,7 +32,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Text(
-              'Let the epic begin',
+              'What are you pondering?',
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.white,
@@ -46,12 +44,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-      onPressed: (){
-        print('Add Message button clicked');
-        Navigator.push(context, MaterialPageRoute(builder: (context) => AddMessagePage()));
-      },
-      tooltip: 'Add Message',
-      child: Icon(Icons.add),
+        onPressed: (){
+          print('Add Message added');
+        },
+        tooltip: 'Add Message',
+        child: Icon(Icons.add),
       ),
     );
   }
