@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fan_app/app_services/login.dart';
+import 'package:fan_app/cloud_services/firebase_services.dart';
 import 'package:fan_app/user_services/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../user.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -18,13 +23,11 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-        decoration: BoxDecoration(
-            color: Colors.lightBlueAccent
-        ),
+        decoration: BoxDecoration(color: Colors.lightBlueAccent),
         child: ListView(
           //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(height: 75),
+            SizedBox(height: 50),
             Text(
               'Create New Account',
               style: TextStyle(
@@ -90,18 +93,53 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 45,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25.0),
-                  color: Colors.white
-              ),
+                  color: Colors.white),
               child: MaterialButton(
-                onPressed: (){
-                  print('Signup button clicked');
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-                  print(_firstName.text);
-                  print(_lastName.text);
-                  print(_email.text);
-                  print(_password.text);
+                onPressed: () async {
+                  //print('Signup button clicked');
+                  bool successful = await AuthServices().signUp(
+                      _email.text.trim(),
+                      _password.text.trim()
+                  ).then((value) async {
+                    User? user = FirebaseAuth.instance.currentUser;
+                    await FirebaseFirestore.instance.collection("users").doc(user!.uid).set(
+                        {
+                          'user_id': user.uid.trim(),
+                          'first_name': _firstName.text.trim(),
+                          'last_name':  _lastName.text.trim(),
+                          'email': _email.text.trim(),
+                          'user_role': 'customer'.trim(),
+                          'reg_date_time': user.metadata.creationTime
+                        });
+                    return true;
+                  });
+                  if (successful) {
+                    //when successful, navigate user to home page
+                    Navigator.pop(context, true);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                  } else {
+                    //when not successful, popup alert
+                    //and prompt user to try again
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            content: Text(
+                                'Error Occurred. Please try again!'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, true),
+                                child: Text('OK'),
+                              ),
+                            ],
+                          );
+                        });
+                  }
                 },
-                child: Text('Signup', style: TextStyle(fontWeight: FontWeight.bold),),
+                child: Text(
+                  'Signup',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
