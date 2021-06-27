@@ -18,10 +18,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    AuthServices().checkUser(FirebaseAuth.instance.currentUser!.uid).then((bool value) {
-      isAdmin = value;
-    });
-    print(isAdmin);
 
     return Scaffold(
       appBar: AppBar(
@@ -61,8 +57,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pop(context, true);
-                            Navigator.pop(context, true);
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
                             AuthServices().signOut();
                           },
                           child: Text('Yes'),

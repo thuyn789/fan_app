@@ -93,8 +93,8 @@ class _LoginState extends State<LoginPage> {
                   bool successful = await AuthServices().login(_email.text, _password.text);
                   if (successful) {
                     //when successful, navigate user to home page
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
+                    String accountType = await AuthServices().checkUser(FirebaseAuth.instance.currentUser!.uid);
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
                   } else {
                     //when not successful, popup alert
                     //and prompt user to try again

@@ -115,8 +115,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   });
                   if (successful) {
                     //when successful, navigate user to home page
-                    Navigator.pop(context, true);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
                   } else {
                     //when not successful, popup alert
                     //and prompt user to try again

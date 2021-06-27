@@ -77,20 +77,19 @@ class AuthServices {
   }
 
   //Check user role
-  Future<bool> checkUser(String userID) async {
-    FirebaseFirestore user = FirebaseFirestore.instance;
-    bool isAdmin = false;
-    await user
-        .collection('users')
-        .doc(userID)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      if (documentSnapshot.exists) {
-        if (documentSnapshot["user_role"] == "admin") {
-          isAdmin = true;
-        }
-      }
-    });
-    return isAdmin;
+  Future<String> checkUser(String userID) async {
+    try {
+      FirebaseFirestore user = FirebaseFirestore.instance;
+      return await user
+          .collection('users')
+          .doc(userID)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        return documentSnapshot["user_role"];
+      });
+    } catch (e) {
+      print(e);
+      return "customer".trim();
+    }
   }
 }
