@@ -93,8 +93,8 @@ class _LoginState extends State<LoginPage> {
                   bool successful = await AuthServices().login(_email.text, _password.text);
                   if (successful) {
                     //when successful, navigate user to home page
-                    String accountType = await AuthServices().checkUser(FirebaseAuth.instance.currentUser!.uid);
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+                    String accountType = await AuthServices().checkAccountType(FirebaseAuth.instance.currentUser!.uid);
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage(accountType: accountType,)));
                   } else {
                     //when not successful, popup alert
                     //and prompt user to try again
@@ -132,7 +132,7 @@ class _LoginState extends State<LoginPage> {
                 onPressed: () async {
                   //print('Login button clicked');
                   await AuthServices().signInWithGoogle().then((UserCredential credential) {
-                    MaterialPageRoute(builder: (context) => HomePage());
+                    MaterialPageRoute(builder: (context) => HomePage(accountType: "customer",));
                   });
                 },
                 child: Text(

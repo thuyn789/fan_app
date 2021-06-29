@@ -7,6 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class HomePage extends StatefulWidget {
+  HomePage({Key? key, required this.accountType}) : super(key: key);
+
+  final String accountType;
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -14,7 +18,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   TextEditingController yourMessage = TextEditingController();
   //This variable is to control the appearance of the "Add Message" button
-  bool isAdmin = true;
+
+  bool isAdmin() {
+    if(widget.accountType == "admin"){
+      print('true');
+      return true;
+    }
+    print('false');
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +123,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             //check if admin is log in
             //this function is only available to admin
-            if (isAdmin)
+            if (isAdmin())
               SpeedDialChild(
                 child: Icon(Icons.add),
                 backgroundColor: Colors.white,

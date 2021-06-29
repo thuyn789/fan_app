@@ -5,7 +5,7 @@ import 'package:fan_app/user_services/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../user.dart';
+import 'package:fan_app/user.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -115,7 +115,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   });
                   if (successful) {
                     //when successful, navigate user to home page
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage(accountType: "customer",)));
                   } else {
                     //when not successful, popup alert
                     //and prompt user to try again

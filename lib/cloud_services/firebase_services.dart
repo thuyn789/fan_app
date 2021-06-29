@@ -77,7 +77,7 @@ class AuthServices {
   }
 
   //Check user role
-  Future<String> checkUser(String userID) async {
+  Future<String> checkAccountType(String userID) async {
     try {
       FirebaseFirestore user = FirebaseFirestore.instance;
       return await user
